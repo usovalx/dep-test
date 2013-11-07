@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sleep 1
+cat >a.hpp <<END
+#ifndef LIBA_A
+#define LIBA_A
+
+int doA(int x);
+
+#endif
+END

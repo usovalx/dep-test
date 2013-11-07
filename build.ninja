@@ -1,0 +1,28 @@
+
+rule CC
+    depfile = $out.d
+    command = g++ -c -MMD -MF $out.d  -o $out $in
+
+rule AR
+    command = rm -f $out && ar rcs $out $in
+
+rule RUN
+    command = cd $WD && $CMD
+
+build liba: phony liba.a
+build liba.a: AR liba/a.o
+build liba/a.o: CC liba/a.cpp || libaHxx
+build libaHxx: phony liba/a.hpp liba/aa.hpp
+build liba/a.hpp: RUN | liba/genheader
+    WD = liba
+    CMD = ./genheader
+build liba/aa.hpp: RUN | liba/genheader2
+    WD = liba
+    CMD = ./genheader2
+
+build libb: phony libb.a
+build libb.a: AR libb/b.o libb/c.o
+build libb/b.o: CC libb/b.cpp || libaHxx libbHxx
+build libb/c.o: CC libb/c.cpp || libaHxx libbHxx
+build libbHxx: phony
+

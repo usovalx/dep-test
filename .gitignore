@@ -1,0 +1,9 @@
+*.swp
+*.o
+*.a
+*.d
+
+.ninja_*
+
+liba/a.hpp
+liba/aa.hpp
